@@ -1,0 +1,74 @@
+<!doctype html>
+<html ng-app="sace.app">
+    <head>
+        <meta charset="utf-8" />
+        <title>SACE</title>
+        <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    </head>
+    <body>
+        <div class="container" ng-controller="RulesCtrl">
+
+            <form role="form" name="rulesForm">
+                <h2>Redirect Rules: </h2>
+                <div class="form-group row" ng-repeat="rule in rules">
+                    <div class="col-xs-5">
+                        <div class="input-group">
+                            <span class="input-group-addon">From</span>
+                            <input ng-model="rule.from" type="text" class="form-control" placeholder="From">
+                        </div>
+                    </div>
+                    <div class="col-xs-2 text-center" style="color: #666; margin-top: 7px;">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                    </div>
+                    <div class="col-xs-5">
+                        <div class="input-group">
+                            <span class="input-group-addon">To</span>
+                            <input ng-model="rule.to" type="text" class="form-control" placeholder="To">
+                            <span class="input-group-addon" ng-click="removeRule(rule)" style="cursor: pointer">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div ng-form="newRuleForm" class="form-group row">
+                    <div class="col-xs-5">
+                        <div class="input-group">
+                            <span class="input-group-addon">From</span>
+                            <input ng-model="newRule.from" type="text" class="form-control" required placeholder="New">
+                        </div>
+                    </div>
+                    <div class="col-xs-2 text-center" style="color: #666; margin-top: 7px;">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                    </div>
+                    <div class="col-xs-5">
+                        <div class="input-group">
+                            <span class="input-group-addon">To</span>
+                            <input ng-model="newRule.to" type="text" class="form-control" required placeholder="New">
+                            <span class="input-group-addon" ng-click="addNewRule()" style="cursor: pointer">
+                                <span class="glyphicon glyphicon-ok"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button type="button" class="btn btn-primary"
+                            ng-class="{disabled: rulesForm.$pristine}"
+                            ng-click="applyRules()"
+                            >Apply</button>
+                    <button sace-file-input type="button" class="btn btn-primary"
+                            on-file-choose="loadNewFiles(files)">
+                        Load New File
+                    </button>
+                </div>
+            </form>
+
+            <h3>Export: </h3>
+            <pre>{{ rules | exportRules }}</pre>
+        </div>
+
+        <script src="../lib/angular.js"></script>
+        <script src="panel.js"></script>
+    </body>
+</html>
